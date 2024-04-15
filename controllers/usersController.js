@@ -1,11 +1,12 @@
 const User = require('../models/User');
 const Note = require('../models/Note');
 const asyncHandler = require('express-async-handler'); //to handle async errors without using many try catch blocks
-const bcrypt = require('bcryptjs'); //to save passwords in a hashed format
+const bcrypt = require('bcrypt'); //to save passwords in a hashed format
+
 
 const getAllUsers = asyncHandler(async(req,res) => {
     const users = await User.find().select('-password').lean()
-    if (!users) {
+    if (!users.length) {
         return res.status(404).json({message : 'No users found'})
     }
     res.json(users)
