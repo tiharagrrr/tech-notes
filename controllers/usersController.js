@@ -71,7 +71,7 @@ const updateUser = asyncHandler(async(req,res) => {
     if (password) {
         user.password = await bcrypt.hash(password, 10)
     }
-
+ 
     const updatedUser = await user.save()
 
     res.json({message: `${updatedUser.username} updated`})
@@ -85,21 +85,25 @@ const deleteUser = asyncHandler(async(req,res) => {
         return res.status(400).json({message: 'User ID is required'})
     }
 
-    const notes = await Note.findOne({user: id}).lean().exec()
+    const note = await Note.findOne({user: id}).lean().exec()
 
-    if (notes?.length) {
+    if (note) {
         return res.status(400).json({message : 'User has assigned notes'})
     }
 
     const user = await User.findById(id).exec()
-
+ 
     if(!user) {
         return res.status(404).json({message: 'User not found'})
     }
 
+    const username = user.username;
+    const userId = user._id;
+
     const result = await user.deleteOne()
 
-    const reply = `Username ${result.username} with ID ${result._id} deleted`
+    // const reply = `Username ${result.username} with ID ${result._id} deleted`
+    const reply = `Username ${username} with ID ${userId} deleted`;
 
     res.json(reply)
 
