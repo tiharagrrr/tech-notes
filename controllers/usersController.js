@@ -107,7 +107,7 @@ const deleteUser = asyncHandler(async(req,res) => {
 
     res.json(reply)
 
-})
+})   
 
 module.exports = {
     getAllUsers,

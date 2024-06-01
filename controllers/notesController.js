@@ -49,8 +49,8 @@ const createNewNote = asyncHandler(async(req,res) => {
 
     } else {
         return res.status(400).json({message: 'Invalid note data recieved'})
-    }
-})
+    } 
+}) 
 
 //@desc     Update note
 //@route PATCH /notes
